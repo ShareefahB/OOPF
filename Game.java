@@ -130,7 +130,7 @@ public class Game {
         } else if (wildPoke.getSpeed() > playerPoke.getSpeed()) {
             firstRound_firstAttacker = wildPoke;
             firstRound_secondAttacker = playerPoke;
-            System.out.println(wildPoke.getName() + " is faster and attacks first!");
+            System.out.println("Opposing " + wildPoke.getName() + " is faster and attacks first!");
         } else {
             if (random.nextBoolean()) {
                 firstRound_firstAttacker = playerPoke;
@@ -199,7 +199,7 @@ public class Game {
                 }
             } else {
                 // Wild Pokémon's turn
-                System.out.println("\n" + wildPoke.getName() + "'s turn to attack!");
+                System.out.println("\nOpposing " + wildPoke.getName() + "'s turn to attack!");
                 executeSingleAttack(firstRound_firstAttacker, firstRound_secondAttacker);
             }
 
@@ -214,7 +214,7 @@ public class Game {
                 System.out.println("\nIt's your turn, " + playerPoke.getName() + "!");
                 System.out.println("1. Attack");
                 if (playerHasItem()) {
-                    System.out.println("2. Use Booster Item");
+                    System.out.println("2. Use Item");
                 }
                 System.out.print("Choose your action: ");
                 int userChoice = scanner.nextInt();
@@ -233,7 +233,7 @@ public class Game {
                 }
             } else {
                 // Wild Pokémon's turn
-                System.out.println("\n" + wildPoke.getName() + "'s turn to attack!");
+                System.out.println("\nOpposing " + wildPoke.getName() + "'s turn to attack!");
                 executeSingleAttack(firstRound_secondAttacker, firstRound_firstAttacker);
             }
         }
