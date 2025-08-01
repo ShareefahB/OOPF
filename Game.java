@@ -4,10 +4,12 @@ public class Game {
     private Player player;
     private Scanner scanner;
     private Random random;
+    private List<String> usedBoosterItems;
 
     public Game() {
         this.scanner = new Scanner(System.in);
         this.random = new Random();
+        this.usedBoosterItems = new ArrayList<>();
     }
 
     public void start() {
@@ -82,14 +84,14 @@ public class Game {
         List<Pokemon> wilds = generateRandomPokemons(2);
 
         System.out.println("\n---------------------------");
-        System.out.println("Two wild PokÃ©mon appeared!");
+        System.out.println("Two wild Pokemon appeared!");
         System.out.println("---------------------------");
         for (Pokemon p : wilds) {
             System.out.println(p + "\n");
         }
 
         if (player.getTeam().isEmpty()) {
-            System.out.println("You have no PokÃ©mon to battle.");
+            System.out.println("You have no Pokemon to battle.");
             return;
         }
 
@@ -99,7 +101,7 @@ public class Game {
         if (player.getTeam().size() > 1) {
             p2 = player.getTeam().get(1); // second caught PokÃ©mon
         } else {
-            System.out.println("You only have one PokÃ©mon. Generating a helper for second battle.");
+            System.out.println("You only have one Pokemon. Generating a helper for second battle.");
             p2 = generateRandomPokemons(1).get(0); // helper if player has only one
         }
         System.out.println("\n--- Starting Battle 1 ---");
@@ -117,37 +119,9 @@ public class Game {
         System.out.println("Battle Start: " + playerPoke.getName() + " vs " + wildPoke.getName());
         System.out.println("---------------------------");
 
-        // Determine which pokemon is the first to attack
-        Pokemon firstRound_firstAttacker;
-        Pokemon firstRound_secondAttacker;
-        
-        if (playerPoke.getSpeed() > wildPoke.getSpeed()) {
-            firstRound_firstAttacker = playerPoke;
-            firstRound_secondAttacker = wildPoke;
-            System.out.println(playerPoke.getName() + " is faster and attacks first!");
-        } else if (wildPoke.getSpeed() > playerPoke.getSpeed()) {
-            firstRound_firstAttacker = wildPoke;
-            firstRound_secondAttacker = playerPoke;
-            System.out.println(wildPoke.getName() + " is faster and attacks first!");
-        } else {
-            if (random.nextBoolean()) {
-                firstRound_firstAttacker = playerPoke;
-                firstRound_secondAttacker = wildPoke;
-                System.out.println("Both pokemon speeds TIED! " + playerPoke.getName() + " attacks first by random generator!");
-            } else {
-                firstRound_firstAttacker = wildPoke;
-                firstRound_secondAttacker = playerPoke;
-                System.out.println("Both pokemon speeds TIED! " + wildPoke.getName() + " attacks first by random generator!");
-            }
-        }
-        System.out.println("---------------------------");
-
         // This is the battle loop. It will continue until one Pokémon is defeated.
         while (!playerPoke.isDefeated() && !wildPoke.isDefeated()) {
-
-            // --- FIRST ATTACKER'S TURN ---
-            // Only allow player action if their Pokémon is the one attacking
-            if (firstRound_firstAttacker == playerPoke) {
+        		//PLAYER'S TURN
                 System.out.println("\nIt's your turn, " + playerPoke.getName() + "!");
                 System.out.println("1. Attack");
                 if (playerHasItem()) {
@@ -156,10 +130,14 @@ public class Game {
                 System.out.print("Choose your action: ");
                 int userChoice = scanner.nextInt();
                 scanner.nextLine();
-
+                
+                boolean playerUsedBoots = false;
+                boolean playerUsedBoxingGloves = false;
+                boolean playerAttacked = false;
                 switch (userChoice) {
                     case 1:
-                       this.executeSingleAttack(firstRound_firstAttacker, firstRound_secondAttacker);
+                       this.executeSingleAttack(playerPoke, wildPoke);
+                       playerAttacked = true;
                         break;
                     case 2:
                     	if (playerHasItem()) {
@@ -172,6 +150,7 @@ public class Game {
                                     int boostAmount = Boosters.getAttackBoost(Boosters.Boxing_Gloves);
                                     playerPoke.applyAttackBoost(boostAmount);
                                     System.out.println(playerPoke.getName() + "'s attack power increased by " + boostAmount + "!");
+                                    playerUsedBoxingGloves = true;
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
                                 }
@@ -180,6 +159,7 @@ public class Game {
                                     int boostAmount = Boosters.getSpeedBoost(Boosters.Boots);
                                     playerPoke.applySpeedBoost(boostAmount);
                                     System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + "!");
+                                    playerUsedBoots = true;
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
                                 }
@@ -194,47 +174,19 @@ public class Game {
                     default:
                         System.out.println("Invalid choice, turn skipped.");
                         break;
-                }
-            } else {
-                // Wild Pokémon's turn
-                System.out.println("\n" + wildPoke.getName() + "'s turn to attack!");
-                executeSingleAttack(firstRound_firstAttacker, firstRound_secondAttacker);
             }
-
-            // Check if the battle is over after the first attack
+            if (playerUsedBoots) {
+            	this.executeSingleAttack(playerPoke, wildPoke);
+            	playerPoke.resetBoosts();
+            }
+            	else {
+            		this.executeSingleAttack(wildPoke, playerPoke);
+            	}
+            // Check if the battle is over 
             if (playerPoke.isDefeated() || wildPoke.isDefeated()) {
-                break;
+            break;
             }
-
-            // --- SECOND ATTACKER'S TURN ---
-            // Only allow player action if their Pokémon is the one attacking
-            if (firstRound_secondAttacker == playerPoke) {
-                System.out.println("\nIt's your turn, " + playerPoke.getName() + "!");
-                System.out.println("1. Attack");
-                if (playerHasItem()) {
-                    System.out.println("2. Use Booster Item");
-                }
-                System.out.print("Choose your action: ");
-                int userChoice = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (userChoice) {
-                    case 1:
-                        executeSingleAttack(firstRound_secondAttacker, firstRound_firstAttacker);
-                        break;
-                    case 2:
-                        // ... (rest of your booster item logic here) ...
-                        break;
-                    default:
-                        System.out.println("Invalid choice, turn skipped.");
-                        break;
-                }
-            } else {
-                // Wild Pokémon's turn
-                System.out.println("\n" + wildPoke.getName() + "'s turn to attack!");
-                executeSingleAttack(firstRound_secondAttacker, firstRound_firstAttacker);
             }
-        }
 
         // Battle outcome and cleanup
         if (wildPoke.isDefeated()) {
@@ -245,7 +197,8 @@ public class Game {
             System.out.println("Your " + playerPoke.getName() + " was defeated.");
         }
         playerPoke.resetBoosts();
-    }
+        }
+    
 
     private void executeSingleAttack(Pokemon attacker, Pokemon defender) {
         if (attacker.isDefeated() || defender.isDefeated()) {
@@ -257,12 +210,15 @@ public class Game {
     
     private boolean playerHasItem() {
         for (String item : player.getInventory().getItems()) {
-            if ("Boxing Gloves".equalsIgnoreCase(item) || "Boots".equalsIgnoreCase(item)) {
+            if ("Boxing Gloves".equalsIgnoreCase(item) || "Boots".equalsIgnoreCase(item)
+            	&&  !this.usedBoosterItems.contains(item)){
                 return true;
             }
         }
         return false;
     }
+    
+    
   
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
