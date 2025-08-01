@@ -99,7 +99,7 @@ public class Game {
         Pokemon p2;
 
         if (player.getTeam().size() > 1) {
-            p2 = player.getTeam().get(1); // second caught PokÃ©mon
+            p2 = player.getTeam().get(1); // second caught Pokémon
         } else {
             System.out.println("You only have one Pokémon. Generating a helper for second battle.");
             p2 = generateRandomPokemons(1).get(0); // helper if player has only one
