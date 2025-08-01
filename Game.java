@@ -33,8 +33,7 @@ public class Game {
             System.out.println("4. Show Inventory");  //added for inventory
             System.out.print("Choose: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            int choice = getValidatedNumberInput();
 
             switch (choice) {
                 case 1:
@@ -372,6 +371,17 @@ public class Game {
             }
         }
         return uniqueItems;
+    }
+    
+    private int getValidatedNumberInput() {
+        while (true) {
+            String input = scanner.nextLine();
+            try {
+                return Integer.parseInt(input.trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid input (numbers only). Try again: ");
+            }
+        }
     }
 
 }
