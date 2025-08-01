@@ -6,17 +6,23 @@ public class Inventory {
 
     public Inventory() {
         items = new ArrayList<>();
+        // Add default items
+        for (int i = 0; i < 5; i++) {
+            addItem("Poké Ball");
+        }
+        addItem("Boxing Gloves");
+        addItem("Boots");
     }
-    //add item into inventory
+
+    // Add a single item to the inventory
     public void addItem(String itemName) {
         items.add(itemName);
         System.out.println(itemName + " added to inventory.");
     }
 
-    //use/remove an item from inventory
+    // Use/remove one item from inventory
     public boolean useItem(String itemName) {
-        if (items.contains(itemName)) {
-            items.remove(itemName);
+        if (items.remove(itemName)) {
             System.out.println("You used a " + itemName + ".");
             return true;
         } else {
@@ -25,37 +31,29 @@ public class Inventory {
         }
     }
 
-    //display all items in inventory
+    // Display all items and their quantities without using HashSet
     public void showInventory() {
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
         } else {
             System.out.println("Inventory:");
+            List<String> displayedItems = new ArrayList<>();
             for (String item : items) {
-                System.out.println("- " + item);
+                if (!displayedItems.contains(item)) {
+                    int count = 0;
+                    for (String innerItem : items) {
+                        if (item.equals(innerItem)) {
+                            count++;
+                        }
+                    }
+                    System.out.println("- " + item + " (x" + count + ")");
+                    displayedItems.add(item);
+                }
             }
         }
     }
 
-    // use Pokeball
-    // add another if statement in useItem(), use inheritance, connect with line 284
-    public void usePokeball() {
-        if (items.contains("Pokeball")) {
-            System.out.println("Select a Poké Ball to use: \n1. Poké Ball \n2. Great Ball \n3. Ultra Ball \n4. Master Ball \n");
-            System.out.print("Choice: ");
-            String choice = System.console().readLine();
-        } else {
-            System.out.println("You don't have any Pokeballs left.");
-        }
+    public List<String> getItems() {
+        return this.items;
     }
 }
-
-class Pokeball extends Inventory {
-    public void usePokeball() {
-        if (super.useItem("Pokeball")) {
-            System.out.println("You used a Pokeball to catch a Pokémon!");
-        }
-    }
-}
-
-//class GreatBall extends Pokeball 
