@@ -57,3 +57,6 @@ public class Inventory {
         return this.items;
     }
 }
+
+
+// pokeball stuff: do inheritance, set a base number for each type for the chance catch rate, adjust attemptCatch() in Game line 267)
