@@ -5,11 +5,13 @@ public class Game {
     private Scanner scanner;
     private Random random;
     private List<String> usedBoosterItems;
+    private boolean boosterItemUsedInBattle;
 
     public Game() {
         this.scanner = new Scanner(System.in);
         this.random = new Random();
         this.usedBoosterItems = new ArrayList<>();
+        this.boosterItemUsedInBattle = false;
     }
 
     public void start() {
@@ -82,6 +84,7 @@ public class Game {
 
     private void battle() {
         List<Pokemon> wilds = generateRandomPokemons(2);
+        this.boosterItemUsedInBattle = false;
 
         System.out.println("\n---------------------------");
         System.out.println("Two wild Pokemon appeared!");
@@ -147,18 +150,20 @@ public class Game {
                             
                             if (Boosters.Boxing_Gloves.equalsIgnoreCase(itemName)) {
                                 if (player.getInventory().useItem(itemName)) {
+                                	this.boosterItemUsedInBattle = true;
                                     int boostAmount = Boosters.getAttackBoost(Boosters.Boxing_Gloves);
                                     playerPoke.applyAttackBoost(boostAmount);
-                                    System.out.println(playerPoke.getName() + "'s attack power increased by " + boostAmount + "!");
+                                    System.out.println(playerPoke.getName() + "'s attack power increased by " + boostAmount + "to " + playerPoke.getAttackPower() +" !");
                                     playerUsedBoxingGloves = true;
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
                                 }
                             } else if (Boosters.Boots.equalsIgnoreCase(itemName)) {
                                 if (player.getInventory().useItem(itemName)) {
+                                	this.boosterItemUsedInBattle = true;
                                     int boostAmount = Boosters.getSpeedBoost(Boosters.Boots);
                                     playerPoke.applySpeedBoost(boostAmount);
-                                    System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + "!");
+                                    System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + "to " + playerPoke.getAttackPower() + "!");
                                     playerUsedBoots = true;
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
