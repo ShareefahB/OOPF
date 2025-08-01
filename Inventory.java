@@ -36,4 +36,16 @@ public class Inventory {
             }
         }
     }
+
+    // use Pokeball
+    // add another if statement in useItem(), use inheritance, connect with line 284
+    /*public void usePokeball() {
+        if (items.contains("Pokeball")) {
+            System.out.println("Select a Poké Ball to use: \n1. Poké Ball \n2. Great Ball \n3. Ultra Ball \n4. Master Ball \n");
+            System.out.print("Choice: ");
+            String choice = System.console().readLine();
+        } else {
+            System.out.println("You don't have any Pokeballs left.");
+        }
+    }*/
 }
