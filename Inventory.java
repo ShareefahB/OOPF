@@ -31,7 +31,7 @@ public class Inventory {
         }
     }
 
-    
+    // Show items in the inventory
     public void showInventory() {
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
