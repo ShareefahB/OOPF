@@ -8,7 +8,7 @@ public class Inventory {
         items = new ArrayList<>();
         // Add default items
         for (int i = 0; i < 5; i++) {
-            addItem("Poké Ball");
+            addItem("PokeBall");
         }
         addItem("Boxing Gloves");
         addItem("Boots");
@@ -17,7 +17,6 @@ public class Inventory {
     // Add a single item to the inventory
     public void addItem(String itemName) {
         items.add(itemName);
-        System.out.println(itemName + " added to inventory.");
     }
 
     // Use/remove one item from inventory
@@ -31,23 +30,24 @@ public class Inventory {
         }
     }
 
-    // Show items in the inventory
+
     public void showInventory() {
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
         } else {
-            System.out.println("\nInventory:");
+            System.out.println("Inventory:");
             List<String> displayedItems = new ArrayList<>();
             for (String item : items) {
                 if (!displayedItems.contains(item)) {
-                    int count = 0;
+                    int itemQuantity = 0;
                     for (String innerItem : items) {
                         if (item.equals(innerItem)) {
-                            count++;
+                            itemQuantity++;
                         }
                     }
-                    System.out.println("- " + item + " (x" + count + ")");
+                    System.out.println("-" + item + " (x" + itemQuantity + ")");
                     displayedItems.add(item);
+                    
                 }
             }
         }
@@ -57,6 +57,3 @@ public class Inventory {
         return this.items;
     }
 }
-
-
-// pokeball stuff: do inheritance, set a base number for each type for the chance catch rate, adjust attemptCatch() in Game line 267)
