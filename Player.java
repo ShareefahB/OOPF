@@ -3,12 +3,14 @@ package oopAssignment;
 import java.util.ArrayList;
 import java.util.List;
 
-//attributes
+
 public class Player {
+    //attributes
     private String name;
     private List<Pokemon> team;
     private int score;
     private Inventory inventory;
+
     // Constructor
     public Player(String name) {
         this.name = name;
