@@ -31,7 +31,7 @@ public class Inventory {
         }
     }
 
-    // Display all items and their quantities without using HashSet
+    
     public void showInventory() {
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
