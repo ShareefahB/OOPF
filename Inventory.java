@@ -36,7 +36,7 @@ public class Inventory {
         if (items.isEmpty()) {
             System.out.println("Your inventory is empty.");
         } else {
-            System.out.println("Inventory:");
+            System.out.println("\nInventory:");
             List<String> displayedItems = new ArrayList<>();
             for (String item : items) {
                 if (!displayedItems.contains(item)) {
