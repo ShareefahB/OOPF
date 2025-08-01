@@ -81,9 +81,10 @@ public class Game {
          System.out.println("Invalid choice. Defaulting to first PokÃ©mon.");
          this.player.addPokemon((Pokemon)starters.get(0));
       }
-
+        player.addItemToInventory("Poké Ball");
+        player.addItemToInventory("Poké Ball");
+        player.addItemToInventory("Poké Ball");
    }
-
    private void battle() {
       List<Pokemon> wilds = this.generateRandomPokemons(2);
       System.out.println("\n---------------------------");
