@@ -73,9 +73,21 @@ public class Player {
             }
         }
     }
-    
-    public Inventory getInventory() {  //added for inventory
+    //inventory
+    public Inventory getInventory() {  
         return inventory;
+    }
+    //show inventory 
+    public void showInventory() {
+        inventory.showInventory();
+    }
+  //add item into inventory
+    public void addItemToInventory(String itemName) {
+        inventory.addItem(itemName);
+    }
+  //use item
+    public boolean useItemFromInventory(String itemName) {
+        return inventory.useItem(itemName);
     }
 
     @Override
