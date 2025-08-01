@@ -28,7 +28,7 @@ public class Game {
       while(running) {
          System.out.println("\n---------------------------");
          System.out.println("~Menu~");
-         System.out.println("1. Show My PokÃ©mon");
+         System.out.println("1. Show My Pokemon");
          System.out.println("2. Battle");
          System.out.println("3. Exit");
          System.out.println("4. Show Inventory");
@@ -64,7 +64,7 @@ public class Game {
    private void chooseStarter() {
       List<Pokemon> starters = this.generateRandomPokemons(3);
       System.out.println("\n---------------------------");
-      System.out.println("Choose your starter PokÃ©mon:");
+      System.out.println("Choose your starter Pokemon:");
       System.out.println("---------------------------");
 
       int choice;
@@ -78,17 +78,17 @@ public class Game {
       if (choice >= 0 && choice < starters.size()) {
          this.player.addPokemon((Pokemon)starters.get(choice));
       } else {
-         System.out.println("Invalid choice. Defaulting to first PokÃ©mon.");
+         System.out.println("Invalid choice. Defaulting to first Pokemon.");
          this.player.addPokemon((Pokemon)starters.get(0));
       }
-        player.addItemToInventory("Poké Ball");
-        player.addItemToInventory("Poké Ball");
-        player.addItemToInventory("Poké Ball");
+        player.addItemToInventory("Poke Ball");
+        player.addItemToInventory("Poke Ball");
+        player.addItemToInventory("Poke Ball");
    }
    private void battle() {
       List<Pokemon> wilds = this.generateRandomPokemons(2);
       System.out.println("\n---------------------------");
-      System.out.println("Two wild PokÃ©mon appeared!");
+      System.out.println("Two wild Pokemon appeared!");
       System.out.println("---------------------------");
       Iterator var3 = wilds.iterator();
 
@@ -99,14 +99,14 @@ public class Game {
       }
 
       if (this.player.getTeam().isEmpty()) {
-         System.out.println("You have no PokÃ©mon to battle.");
+         System.out.println("You have no Pokemon to battle.");
       } else {
          p1 = (Pokemon)this.player.getTeam().get(0);
          Pokemon p2;
          if (this.player.getTeam().size() > 1) {
             p2 = (Pokemon)this.player.getTeam().get(1);
          } else {
-            System.out.println("You only have one PokÃ©mon. Generating a helper for second battle.");
+            System.out.println("You only have one Pokemon. Generating a helper for second battle.");
             p2 = (Pokemon)this.generateRandomPokemons(1).get(0);
          }
 
@@ -286,7 +286,7 @@ public class Game {
       System.out.println("Attempt to catch " + wild.getName() + "? (y/n): ");
       System.out.println("---------------------------");
       String input = this.scanner.nextLine();
-      if (input.equalsIgnoreCase("y") && this.player.getInventory().useItem("PokÃ© Ball")) {
+      if (input.equalsIgnoreCase("y") && this.player.getInventory().useItem("Poke Ball")) {
          int chance = this.random.nextInt(100);
          if (chance < 50) {
             this.player.addPokemon(wild);
