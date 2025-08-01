@@ -46,6 +46,7 @@ public class Game {
                 case 3:
                     running = false;
                     System.out.println("\n---------------------------");
+                    System.out.printf("Final score: %d\nhi",player.getScore());
                     System.out.println("Thanks for playing!");
                     System.out.println("---------------------------");
                     break;
@@ -134,12 +135,13 @@ public class Game {
                 int userChoice = scanner.nextInt();
                 scanner.nextLine();
                 
+             
                 boolean playerUsedBoots = false;
                 boolean playerUsedBoxingGloves = false;
                 boolean playerAttacked = false;
                 switch (userChoice) {
                     case 1:
-                       this.executeSingleAttack(playerPoke, wildPoke);
+                       this.executeSingleAttack(playerPoke, wildPoke);                      
                        playerAttacked = true;
                         break;
                     case 2:
@@ -153,8 +155,12 @@ public class Game {
                                 	this.boosterItemUsedInBattle = true;
                                     int boostAmount = Boosters.getAttackBoost(Boosters.Boxing_Gloves);
                                     playerPoke.applyAttackBoost(boostAmount);
-                                    System.out.println(playerPoke.getName() + "'s attack power increased by " + boostAmount + "to " + playerPoke.getAttackPower() +" !");
+                                    System.out.println(playerPoke.getName() + "'s attack power increased by " + boostAmount + " from " + playerPoke.getBaseAttackPower() + " to " + playerPoke.getAttackPower() +" !");
+                                    System.out.println("---------------------------");
+                                    this.executeSingleAttack(playerPoke, wildPoke);
+                                    playerPoke.resetBoosts();                                    
                                     playerUsedBoxingGloves = true;
+                                    
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
                                 }
@@ -163,16 +169,21 @@ public class Game {
                                 	this.boosterItemUsedInBattle = true;
                                     int boostAmount = Boosters.getSpeedBoost(Boosters.Boots);
                                     playerPoke.applySpeedBoost(boostAmount);
-                                    System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + "to " + playerPoke.getAttackPower() + "!");
+                                    System.out.println(playerPoke.getName() + " used Boots and now attacks first in this round!");
+                                    System.out.println("---------------------------");
+                                    System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + " from " + playerPoke.getBaseSpeed() + " to " + playerPoke.getSpeed() + " !");
+                                    this.executeSingleAttack(playerPoke, wildPoke);
+                                    playerPoke.resetBoosts();                                
                                     playerUsedBoots = true;
+                                    this.executeSingleAttack(wildPoke, playerPoke);
                                 } else {
                                     System.out.println("Could not use " + itemName + ". You might not have it or it's depleted.");
                                 }
                             } else {
-                                System.out.println("Item not found! Please enter a valid item. Your turn is skipped.");
+                                System.out.println("Item cannot be used in this battle!");
                             }
                         } else {
-                            System.out.println("Unable to use item: Item Insufficient. Your turn is skipped.");
+                            System.out.println("Invalid action choice , Your turn is skipped!");
                         }
                         break;
                         
@@ -180,16 +191,15 @@ public class Game {
                         System.out.println("Invalid choice, turn skipped.");
                         break;
             }
-            if (playerUsedBoots) {
-            	this.executeSingleAttack(playerPoke, wildPoke);
-            	playerPoke.resetBoosts();
-            }
-            	else {
-            		this.executeSingleAttack(wildPoke, playerPoke);
+          
+            
+            if (!playerUsedBoots) {
+            	this.executeSingleAttack(wildPoke, playerPoke);
             	}
+        
             // Check if the battle is over 
             if (playerPoke.isDefeated() || wildPoke.isDefeated()) {
-            break;
+            	break;
             }
             }
 
@@ -214,6 +224,9 @@ public class Game {
     }
     
     private boolean playerHasItem() {
+    	if (boosterItemUsedInBattle) {
+    		return false;
+    	}
         for (String item : player.getInventory().getItems()) {
             if ("Boxing Gloves".equalsIgnoreCase(item) || "Boots".equalsIgnoreCase(item)
             	&&  !this.usedBoosterItems.contains(item)){
@@ -232,7 +245,7 @@ public class Game {
         String input = scanner.nextLine();
 
         if (input.equalsIgnoreCase("y")) {
-        	if (player.getInventory().useItem("PokÃ© Ball")) {               //edited to access inventory
+        	if (player.getInventory().useItem("PokeBall")) {               //edited to access inventory
         	    int chance = random.nextInt(100);
         	    if (chance < 50) {
         	        player.addPokemon(wild);
