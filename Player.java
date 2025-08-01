@@ -1,14 +1,13 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
-
+//attributes
 public class Player {
-    //attributes
     private String name;
     private List<Pokemon> team;
     private int score;
     private Inventory inventory;
-
     // Constructor
     public Player(String name) {
         this.name = name;
@@ -46,7 +45,7 @@ public class Player {
             team.add(pokemon);
             System.out.println(pokemon.getName() + " has been added to your team!");
         } else {
-            System.out.println("Your team is full. Cannot add more Pokémon.");
+            System.out.println("Your team is full. Cannot add more PokÃ©mon.");
         }
     }
 
@@ -65,29 +64,17 @@ public class Player {
 
     public void showTeam() {
         if (team.isEmpty()) {
-            System.out.println("You don't have any Pokémon yet.");
+            System.out.println("You don't have any PokÃ©mon yet.");
         } else {
-            System.out.println("Your Pokémon:");
+            System.out.println("Your PokÃ©mon:");
             for (int i = 0; i < team.size(); i++) {
                 System.out.println("[" + i + "]\n" + team.get(i).toString() + "\n");
             }
         }
     }
-    //inventory
-    public Inventory getInventory() {  
+    
+    public Inventory getInventory() {  //added for inventory
         return inventory;
-    }
-    //show inventory 
-    public void showInventory() {
-        inventory.showInventory();
-    }
-  //add item into inventory
-    public void addItemToInventory(String itemName) {
-        inventory.addItem(itemName);
-    }
-  //use item
-    public boolean useItemFromInventory(String itemName) {
-        return inventory.useItem(itemName);
     }
 
     @Override
