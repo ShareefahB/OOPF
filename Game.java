@@ -21,6 +21,10 @@ public class Game {
         this.player = new Player(name);
      
         printInstructions();
+        
+        // Add  items using polymorphism
+        player.getInventory().addItem(new BoxingGloves()); // polymorphic item
+        player.getInventory().addItem(new Boots());        // polymorphic item
 
 
         this.running = true;
