@@ -2,58 +2,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    private List<String> items;
+    private List<Item> items;
 
     public Inventory() {
         items = new ArrayList<>();
-        // Add default items
-        for (int i = 0; i < 5; i++) {
-            addItem("PokeBall");
-        }
-        addItem("Boxing Gloves");
-        addItem("Boots");
     }
 
-    // Add a single item to the inventory
-    public void addItem(String itemName) {
-        items.add(itemName);
+    public void addItem(Item item) {
+        items.add(item);
+        System.out.println(item.getName() + " added to inventory.");
     }
 
-    // Use/remove one item from inventory
-    public boolean useItem(String itemName) {
-        if (items.remove(itemName)) {
-            System.out.println("You used a " + itemName + ".");
-            return true;
-        } else {
-            System.out.println("You don't have any " + itemName + " left.");
-            return false;
-        }
-    }
-
-
-    public void showInventory() {
+    public void displayItems() {
         if (items.isEmpty()) {
-            System.out.println("Your inventory is empty.");
+            System.out.println("Inventory is empty.");
         } else {
-            System.out.println("Inventory:");
-            List<String> displayedItems = new ArrayList<>();
-            for (String item : items) {
-                if (!displayedItems.contains(item)) {
-                    int itemQuantity = 0;
-                    for (String innerItem : items) {
-                        if (item.equals(innerItem)) {
-                            itemQuantity++;
-                        }
-                    }
-                    System.out.println("-" + item + " (x" + itemQuantity + ")");
-                    displayedItems.add(item);
-                    
-                }
+            System.out.println("Your inventory:");
+            for (int i = 0; i < items.size(); i++) {
+                Item item = items.get(i);
+                System.out.println((i + 1) + ". " + item.getName() + " - " + item.getDescription());
             }
         }
     }
 
+    public void useItem(int index, Pokemon p) {
+        if (index >= 0 && index < items.size()) {
+            Item item = items.get(index);
+            item.use(p);
+            items.remove(index);
+        } else {
+            System.out.println("Invalid item index.");
+        }
+    }
+
+    // Use item by name (used in Game.java)
+    public boolean useItem(String name) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equalsIgnoreCase(name)) {
+                items.get(i).use(null); // If the item affects the player instead of a specific Pokémon
+                items.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Get a list of item names (used in Game.java)
     public List<String> getItems() {
-        return this.items;
+        List<String> names = new ArrayList<>();
+        for (Item item : items) {
+            names.add(item.getName());
+        }
+        return names;
+    }
+
+    // Full access to Item objects (if needed elsewhere)
+    public List<Item> getItemObjects() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
+
+    public void showInventory() {
+        displayItems();
     }
 }
