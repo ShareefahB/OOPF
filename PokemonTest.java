@@ -1,8 +1,8 @@
 public class PokemonTest {
     public static void main(String[] args) {
         // Create two Pokémon with different types
-        Pokemon firePoke = new Pokemon("Charmander", 100, 20, "Fire", "Fire");
-        Pokemon grassPoke = new Pokemon("Bulbasaur", 100, 20, "Grass", "Grass");
+        Pokemon firePoke = new Pokemon("Charmander", 100, 20, 15, "Fire", "Fire");
+        Pokemon grassPoke = new Pokemon("Bulbasaur", 100, 20, 15, "Grass", "Grass");
 
         // Display their initial info
         System.out.println("=== Initial Pokémon Stats ===");
