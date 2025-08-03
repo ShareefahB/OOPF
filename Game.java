@@ -328,9 +328,14 @@ public class Game {
     	        player.addPokemon(wild);
                 player.increaseScore(100);
     	    } else {
-        	    System.out.println(wild.getName() + " escaped!");
+        	    System.out.println(wild.getName() + " escaped!\n");
             }
-        } 
+        } else if (input.equalsIgnoreCase("n")) {
+            System.out.println("You chose not to catch " + wild.getName() + ".");
+        } else {
+            System.out.println("Invalid input. Please enter 'y' or 'n'.");
+            attemptCatch(wild);
+        }
     }
 
     private List<Pokemon> generateRandomPokemons(int count) {
