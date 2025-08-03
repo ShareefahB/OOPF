@@ -25,7 +25,7 @@ public class Game {
         // Add items using polymorphism
         player.getInventory().addItem(new BoxingGloves()); // polymorphic item
         player.getInventory().addItem(new Boots());        // polymorphic item
-
+        player.getInventory().addItem(new Pokeballs());    // polymorphic item
 
         this.running = true;
         while (running) {
@@ -247,7 +247,7 @@ public class Game {
         // Battle outcome and cleanup
         if (wildPoke.isDefeated()) {
             System.out.println("Your " + playerPoke.getName() + " defeated " + wildPoke.getName() + "!");
-            player.increaseScore(10);
+            player.increaseScore(100);
             attemptCatch(wildPoke);
         } else if (playerPoke.isDefeated()) {
             System.out.println("Your " + playerPoke.getName() + " was defeated.");
@@ -279,25 +279,47 @@ public class Game {
     }
     
     
-    // potentially remove this one, usePokeball in Pokeballs.java
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
         System.out.println("Attempt to catch " + wild.getName() + "? (y/n): ");
-        System.out.println("---------------------------");
         String input = scanner.nextLine();
+        System.out.println("---------------------------");
 
-        if (input.equalsIgnoreCase("y")) {
-        	if (player.getInventory().useItem("PokeBall")) {               
-                /*System.out.println("Select a Poké Ball type to use: \n1. Poké Ball\n2. Great Ball\n3. Ultra Ball \n4. Master Ball");
-                int type = scanner.nextInt();*/
+        if (input.equalsIgnoreCase("y")) {       
+            System.out.println("Select a Poké Ball type to use: \n1. Poké Ball\n2. Great Ball\n3. Ultra Ball \n4. Master Ball");
+            int type = scanner.nextInt();
+
+            int catchRate = 0;
+            switch(type) {
+                case 1:     // Poké Ball
+                    System.out.println("You used a Poké Ball!");
+                    catchRate = 20;
+                    break;
+
+                case 2:     // Great Ball
+                    System.out.println("You used a Great Ball!");
+                    catchRate = 30;
+                    break;
+
+                case 3:     // Ultra Ball
+                    System.out.println("You used a Ultra Ball!");
+                    catchRate = 40;
+                    break;
+
+                case 4:     // Master Ball
+                    System.out.println("You used a Master Ball!");
+                    catchRate = 51; 
+                    break;
+            }
                 
-                //edited to access inventory
-        	    int chance = random.nextInt(100);
-        	    if (chance > 50) {
-        	        player.addPokemon(wild);
-        	    } else {
-        	        System.out.println(wild.getName() + " escaped!");
-                }
+        	int chance = random.nextInt(50);
+        	if ((chance + catchRate) > 50) {
+                System.out.println("You successfully caught " + wild.getName() + "!");
+                System.out.println(wild.getName() + " has been added to your team.");
+    	        player.addPokemon(wild);
+                player.increaseScore(100);
+    	    } else {
+        	    System.out.println(wild.getName() + " escaped!");
             }
         }
     }
