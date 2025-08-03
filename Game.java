@@ -52,6 +52,7 @@ public class Game {
                     endGame();
                     break;
                 case 4:
+                    System.out.println();
                     player.getInventory().showInventory();
                     break;
                 default:
@@ -281,33 +282,32 @@ public class Game {
     
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
-        System.out.println("Attempt to catch " + wild.getName() + "? (y/n): ");
-        String input = scanner.nextLine();
-        System.out.println("---------------------------");
+        System.out.print("Attempt to catch " + wild.getName() + "? (y/n): ");
+        String input = scanner.nextLine().toLowerCase();
+        System.out.println();
 
         if (input.equalsIgnoreCase("y")) {       
-            System.out.println("Select a Poké Ball type to use: \n1. Poké Ball\n2. Great Ball\n3. Ultra Ball \n4. Master Ball");
+            System.out.println("Choose a Poké Ball to use: \n1. Poké Ball - 40% success rate \n2. Great Ball - 60% success rate \n3. Ultra Ball - 80% success rate \n4. Master Ball - 100% success rate");
+            System.out.print("Choose: ");
             int type = scanner.nextInt();
+            getValidatedNumberInput();
 
             int catchRate = 0;
             switch(type) {
-                case 1:     // Poké Ball
-                    System.out.println("You used a Poké Ball!");
-                    catchRate = 20;
+                case 1:     
+                    System.out.println("\nYou used a Poké Ball!");
+                    catchRate = 10;
                     break;
-
-                case 2:     // Great Ball
-                    System.out.println("You used a Great Ball!");
-                    catchRate = 30;
+                case 2:     
+                    System.out.println("\nYou used a Great Ball!");
+                    catchRate = 25;
                     break;
-
-                case 3:     // Ultra Ball
-                    System.out.println("You used a Ultra Ball!");
-                    catchRate = 40;
+                case 3:     
+                    System.out.println("\nYou used a Ultra Ball!");
+                    catchRate = 35;
                     break;
-
-                case 4:     // Master Ball
-                    System.out.println("You used a Master Ball!");
+                case 4:     
+                    System.out.println("\nYou used a Master Ball!");
                     catchRate = 51; 
                     break;
             }
@@ -315,13 +315,12 @@ public class Game {
         	int chance = random.nextInt(50);
         	if ((chance + catchRate) > 50) {
                 System.out.println("You successfully caught " + wild.getName() + "!");
-                System.out.println(wild.getName() + " has been added to your team.");
     	        player.addPokemon(wild);
                 player.increaseScore(100);
     	    } else {
         	    System.out.println(wild.getName() + " escaped!");
             }
-        }
+        } 
     }
 
     private List<Pokemon> generateRandomPokemons(int count) {
@@ -372,8 +371,8 @@ public class Game {
         System.out.println("• Items can only be used once per turn and must be in your inventory.");
         System.out.println();
         System.out.println("🎯 CATCHING POKÉMON:");
-        System.out.println("• After winning a battle, you may try to catch the wild Pokémon.");
-        System.out.println("• Poké Balls are required and have a 50% success rate.");
+        System.out.println("• After winning a battle, you may try to catch the wild Pokémon using Poké Balls.");
+        System.out.println("• Different Poké Balls have different success rates so choose carefully.");
         System.out.println("===============================================\n");
         
         System.out.print("\nPress SPACE then ENTER to continue...");
