@@ -300,7 +300,7 @@ public class Game {
         if (input.equalsIgnoreCase("y")) {       
             System.out.println("Choose a Poké Ball to use: \n1. Poké Ball - 40% success rate \n2. Great Ball - 60% success rate \n3. Ultra Ball - 80% success rate \n4. Master Ball - 100% success rate");
             System.out.print("Choose: ");
-            int type = getValidatedNumberInput();  // already handles `scanner.nextLine()` safely
+            int type = getValidatedNumberInput(); 
 
             int catchRate = 0;
             switch(type) {
@@ -319,6 +319,10 @@ public class Game {
                 case 4:     
                     System.out.println("\nYou used a Master Ball!");
                     catchRate = 51; 
+                    break;
+                default:
+                    System.out.println("Invalid choice. You used a random Poké Ball!");
+                    catchRate = random.nextInt(25);
                     break;
             }
                 
