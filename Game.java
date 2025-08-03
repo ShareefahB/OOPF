@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class Game {
+public class Game { //attributes
     private Player player;
     private Scanner scanner;
     private Random random;
@@ -10,9 +10,9 @@ public class Game {
     private boolean running;
     private boolean gameEnded = false;
 
-    public Game() {
-        this.scanner = new Scanner(System.in);
-        this.random = new Random();
+    public Game() { //constructors
+        this.scanner = new Scanner(System.in); //initiate the scanner
+        this.random = new Random(); //random number generator
         this.usedBoosterItems = new ArrayList<>();
         this.boosterItemUsedInBattle = false;
     }
@@ -35,11 +35,11 @@ public class Game {
             System.out.println("~Menu~");
             System.out.println("1. Show My Pokemon");
             System.out.println("2. Battle");
-            System.out.println("3. Exit");
-            System.out.println("4. Show Inventory");  //added for inventory
+            System.out.println("3. Exit"); 
+            System.out.println("4. Show Inventory");  
             System.out.print("Choose: ");
 
-            int choice = getValidatedNumberInput();
+            int choice = getValidatedNumberInput(); //check if input is valid
 
             switch (choice) {
                 case 1:
@@ -109,7 +109,7 @@ public class Game {
         if (player.getTeam().size() > 1) {
             p2 = player.getTeam().get(1); // second caught PokÃ©mon
         } else {
-            System.out.println("You only have one Pokemon. Generating a helper for second battle.");
+            System.out.println("... Generating a helper for second battle...");
             p2 = generateRandomPokemons(1).get(0); // helper if player has only one
         }
         System.out.println("\n--- Starting Battle 1 ---");
@@ -130,8 +130,6 @@ public class Game {
         }
 
     }
- // After both battle rounds (or skip) are done
-
     private void battleRound(Pokemon playerPoke, Pokemon wildPoke) {
         System.out.println("\n---------------------------");
         System.out.println("Battle Start: " + playerPoke.getName() + " vs " + wildPoke.getName());
@@ -147,9 +145,18 @@ public class Game {
                 }
                 int userChoice = -1;
                 boolean validInput = false;
-                while (!validInput) {
-                    System.out.print("Choose your action (1 or 2): ");
+               
+                while (!validInput) {                   	
+                    if (boosterItemUsedInBattle) {
+                    	System.out.print("Choose your action: ");                    	
+                    	boosterItemUsedInBattle = true;
+                    }
+                    else {
+                        System.out.print("Choose your action (1 or 2): ");               	
+                    }
+                    
                     String input = scanner.nextLine();
+                    
                 try {
                     userChoice = Integer.parseInt(input);
                     if (userChoice == 1 || (userChoice == 2 && playerHasItem())) {
@@ -413,14 +420,26 @@ public class Game {
     }
 
     private void endGame() {
-        if (gameEnded) return; //  prevent multiple calls
+        if (gameEnded) return; // prevent multiple calls
         gameEnded = true;
 
         System.out.println("\n---------------------------");
         System.out.printf("Final score: %d\n", player.getScore());
         System.out.println("Thanks for playing!");
         System.out.println("---------------------------");
+        
+        System.out.print("Would you like to return to the main menu? (y/n): ");
+        String choice = scanner.nextLine();
+        
+        if (choice.equalsIgnoreCase("y")) {
+            this.running = true; // return to the main menu
+        }
+        else {
+            this.running = false; // Exit the main menu
+            System.exit(0); //  terminate the program
+        }
     }
+    
     
     private List<String> getUsableItemsFromInventory() {
         List<String> uniqueItems = new ArrayList<>();
