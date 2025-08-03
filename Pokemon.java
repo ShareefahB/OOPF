@@ -10,6 +10,7 @@ public class Pokemon {
     private int increaseSpeed = 0; // boosted speed 
     private int baseSpeed; // original speed 
     private int baseAttackPower; // original attack power
+    private boolean isBoosted = false;
     
 
     // Constructor
@@ -46,7 +47,8 @@ public class Pokemon {
     public int getSpeed() {
 		return speed;
 	}
-    public void setSpeed(int speed) {
+
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
@@ -80,11 +82,11 @@ public class Pokemon {
 		return baseSpeed;
 	}
 
-    public int getBaseAttackPower() {
+	public int getBaseAttackPower() {
 		return baseAttackPower;
 	}
 
-    public void setBaseAttackPower(int baseAttackPower) {
+	public void setBaseAttackPower(int baseAttackPower) {
 		this.baseAttackPower = baseAttackPower;
 	}
 
@@ -100,9 +102,14 @@ public class Pokemon {
     }
 
     public void attack(Pokemon target) {
-        double effectiveness = TypeEffectiveness.getEffectiveness(this.moveType, target.getDefenderType());
-        int damage = (int)((double)this.attackPower * effectiveness);
-        
+    	int damage;
+    	if (this.isBoosted) {
+    		damage = this.attackPower;    		
+    	}
+    	else {
+    		double effectiveness = TypeEffectiveness.getEffectiveness(this.moveType, target.getDefenderType());
+    		damage = (int)((double)this.attackPower * effectiveness);
+    	}
         // Apply   the damage to the target's HP
         target.reduceHp(damage); 
         
@@ -113,6 +120,7 @@ public class Pokemon {
     public void applyAttackBoost(int boostAmount) {
     	this.increaseAttack += boostAmount; // Add to the total boost amount
         this.attackPower = this.baseAttackPower + this.increaseAttack;
+        this.isBoosted = true;
     }
     
     public void applySpeedBoost(int boostAmount) {
