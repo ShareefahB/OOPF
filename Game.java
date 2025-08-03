@@ -22,7 +22,7 @@ public class Game {
      
         printInstructions();
         
-        // Add  items using polymorphism
+        // Add items using polymorphism
         player.getInventory().addItem(new BoxingGloves()); // polymorphic item
         player.getInventory().addItem(new Boots());        // polymorphic item
 
@@ -279,7 +279,7 @@ public class Game {
     }
     
     
-  
+    // remove this one, usePokeball in Pokeballs.java
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
         System.out.println("Attempt to catch " + wild.getName() + "? (y/n): ");
@@ -287,9 +287,13 @@ public class Game {
         String input = scanner.nextLine();
 
         if (input.equalsIgnoreCase("y")) {
-        	if (player.getInventory().useItem("PokeBall")) {               //edited to access inventory
+        	if (player.getInventory().useItem("PokeBall")) {               
+                /*System.out.println("Select a Poké Ball type to use: \n1. Poké Ball\n2. Great Ball\n3. Ultra Ball \n4. Master Ball");
+                int type = scanner.nextInt();*/
+                
+                //edited to access inventory
         	    int chance = random.nextInt(100);
-        	    if (chance < 50) {
+        	    if (chance > 50) {
         	        player.addPokemon(wild);
         	    } else {
         	        System.out.println(wild.getName() + " escaped!");
@@ -297,6 +301,7 @@ public class Game {
             }
         }
     }
+
     private List<Pokemon> generateRandomPokemons(int count) {
         String[] names = { "Charmander", "Squirtle", "Bulbasaur", "Pikachu", "Eevee", "Growlithe", "Tsareena" };
         String[] types = { "Fire", "Water", "Grass" };
