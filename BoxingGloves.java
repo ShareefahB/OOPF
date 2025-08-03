@@ -6,7 +6,7 @@ public class BoxingGloves extends Item {
 
     @Override
     public String getDescription() {
-        return "Boosts your Pokémon's attack for one turn.";
+        return "Boosts your Pokemon's attack for one turn.";
     }
 
     @Override
@@ -19,3 +19,4 @@ public class BoxingGloves extends Item {
         }
     }
 }
+
