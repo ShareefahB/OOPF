@@ -45,7 +45,7 @@ public class Player {
             team.add(pokemon);
             System.out.println(pokemon.getName() + " has been added to your team!");
         } else {
-            System.out.println("Your team is full. Cannot add more PokÃ©mon.");
+            System.out.println("Your team is full. Cannot add more Pokémon.");
         }
     }
 
@@ -64,9 +64,9 @@ public class Player {
 
     public void showTeam() {
         if (team.isEmpty()) {
-            System.out.println("You don't have any PokÃ©mon yet.");
+            System.out.println("You don't have any Pokémon yet.");
         } else {
-            System.out.println("Your PokÃ©mon:");
+            System.out.println("Your Pokémon:");
             for (int i = 0; i < team.size(); i++) {
                 System.out.println("[" + i + "]\n" + team.get(i).toString() + "\n");
             }

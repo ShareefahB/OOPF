@@ -31,7 +31,7 @@ public class Game {
         while (running) {
             System.out.println("\n---------------------------");
             System.out.println("~Menu~");
-            System.out.println("1. Show My PokÃ©mon");
+            System.out.println("1. Show My Pokémon");
             System.out.println("2. Battle");
             System.out.println("3. Exit");
             System.out.println("4. Show Inventory");  //added for inventory
@@ -65,7 +65,7 @@ public class Game {
     private void chooseStarter() {
         List<Pokemon> starters = generateRandomPokemons(3);
         System.out.println("\n---------------------------");
-        System.out.println("Choose your starter PokÃ©mon:");
+        System.out.println("Choose your starter Pokémon:");
         System.out.println("---------------------------");
 
         for (int i = 0; i < starters.size(); i++) {
@@ -79,7 +79,7 @@ public class Game {
         if (choice >= 0 && choice < starters.size()) {
             player.addPokemon(starters.get(choice));
         } else {
-            System.out.println("Invalid choice. Defaulting to first PokÃ©mon.");
+            System.out.println("Invalid choice. Defaulting to first Pokémon.");
             player.addPokemon(starters.get(0));
         }
     }
@@ -89,7 +89,7 @@ public class Game {
         this.boosterItemUsedInBattle = false;
 
         System.out.println("\n---------------------------");
-        System.out.println("Two wild Pokemon appeared!");
+        System.out.println("Two wild Pokémon appeared!");
         System.out.println("---------------------------");
         for (Pokemon p : wilds) {
             System.out.println(p + "\n");
@@ -279,7 +279,7 @@ public class Game {
     }
     
     
-    // remove this one, usePokeball in Pokeballs.java
+    // potentially remove this one, usePokeball in Pokeballs.java
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
         System.out.println("Attempt to catch " + wild.getName() + "? (y/n): ");
