@@ -46,8 +46,7 @@ public class Pokemon {
     public int getSpeed() {
 		return speed;
 	}
-
-	public void setSpeed(int speed) {
+    public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
@@ -81,11 +80,11 @@ public class Pokemon {
 		return baseSpeed;
 	}
 
-	public int getBaseAttackPower() {
+    public int getBaseAttackPower() {
 		return baseAttackPower;
 	}
 
-	public void setBaseAttackPower(int baseAttackPower) {
+    public void setBaseAttackPower(int baseAttackPower) {
 		this.baseAttackPower = baseAttackPower;
 	}
 
