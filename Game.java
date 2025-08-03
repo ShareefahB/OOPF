@@ -222,9 +222,9 @@ public class Game {
                                     this.boosterItemUsedInBattle = true;
                                     int boostAmount = Boosters.getSpeedBoost(Boosters.Boots);
                                     playerPoke.applySpeedBoost(boostAmount);
-                                    System.out.println(playerPoke.getName() + " used Boots and now attacks first in this round!");
-                                    System.out.println("---------------------------");
+                                    System.out.println(playerPoke.getName() + " used Boots and now attacks first in this round!");                                                                       
                                     System.out.println(playerPoke.getName() + "'s speed increased by " + boostAmount + " from " + playerPoke.getBaseSpeed() + " to " + playerPoke.getSpeed() + "!");
+                                    System.out.println("---------------------------");
                                     this.executeSingleAttack(playerPoke, wildPoke);
                                     playerPoke.resetBoosts();
                                     playerUsedBoots = true;
@@ -293,9 +293,18 @@ public class Game {
     
     private void attemptCatch(Pokemon wild) {
         System.out.println("\n---------------------------");
-        System.out.print("Attempt to catch " + wild.getName() + "? (y/n): ");
-        String input = scanner.nextLine().toLowerCase();
-        System.out.println();
+        String input;
+        do {
+        	System.out.print("Attempt to catch " + wild.getName() + "? (y/n): ");
+        	input = scanner.nextLine().toLowerCase();
+        	System.out.println();
+        	if (!input.equals("y") && !input.equals("n")) {
+                System.out.println("Invalid input. Please enter 'y' or 'n'.");
+            }
+        }
+        while (!input.equals("y") && !input.equals("n"));
+        	System.out.println();
+            
 
         if (input.equalsIgnoreCase("y")) {       
             System.out.println("Choose a Poké Ball to use: \n1. Poké Ball - 40% success rate \n2. Great Ball - 60% success rate \n3. Ultra Ball - 80% success rate \n4. Master Ball - 100% success rate");
@@ -404,7 +413,7 @@ public class Game {
     }
 
     private void endGame() {
-        if (gameEnded) return; // 👈 prevent multiple calls
+        if (gameEnded) return; //  prevent multiple calls
         gameEnded = true;
 
         System.out.println("\n---------------------------");
@@ -437,4 +446,3 @@ public class Game {
     
 
 }
-
