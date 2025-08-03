@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class Game {
@@ -7,6 +8,7 @@ public class Game {
     private List<String> usedBoosterItems;
     private boolean boosterItemUsedInBattle;
     private boolean running;
+    private boolean gameEnded = false;
 
     public Game() {
         this.scanner = new Scanner(System.in);
@@ -118,9 +120,18 @@ public class Game {
              battleRound(p2, wilds.get(1));
         } else {
             System.out.println(p1.getName() + " was defeated. Cannot proceed to the second battle.");
+        }
+        
+     // After both battle rounds (or skip) are done
+        if (player.getTeam().stream().allMatch(Pokemon::isDefeated)) {
+            System.out.println("\nAll your Pokémon have been defeated.");
+            running = false;
             endGame();
         }
+
     }
+ // After both battle rounds (or skip) are done
+
     private void battleRound(Pokemon playerPoke, Pokemon wildPoke) {
         System.out.println("\n---------------------------");
         System.out.println("Battle Start: " + playerPoke.getName() + " vs " + wildPoke.getName());
@@ -150,6 +161,7 @@ public class Game {
                     System.out.println("Invalid input (letters not allowed). Try again.");
                 }
                 }
+
              
                 boolean playerUsedBoots = false;
                 boolean playerUsedBoxingGloves = false;
@@ -254,7 +266,6 @@ public class Game {
             System.out.println("Your " + playerPoke.getName() + " was defeated.");
         }
         playerPoke.resetBoosts();
-        endGame();
         }
     
 
@@ -289,8 +300,7 @@ public class Game {
         if (input.equalsIgnoreCase("y")) {       
             System.out.println("Choose a Poké Ball to use: \n1. Poké Ball - 40% success rate \n2. Great Ball - 60% success rate \n3. Ultra Ball - 80% success rate \n4. Master Ball - 100% success rate");
             System.out.print("Choose: ");
-            int type = scanner.nextInt();
-            getValidatedNumberInput();
+            int type = getValidatedNumberInput();  // already handles `scanner.nextLine()` safely
 
             int catchRate = 0;
             switch(type) {
@@ -385,9 +395,11 @@ public class Game {
     }
 
     private void endGame() {
-    	this.running = false;
-    	System.out.println("\n---------------------------");
-        System.out.printf("Final score: %d\n",player.getScore());
+        if (gameEnded) return; // 👈 prevent multiple calls
+        gameEnded = true;
+
+        System.out.println("\n---------------------------");
+        System.out.printf("Final score: %d\n", player.getScore());
         System.out.println("Thanks for playing!");
         System.out.println("---------------------------");
     }
@@ -413,5 +425,7 @@ public class Game {
             }
         }
     }
+    
 
 }
+
