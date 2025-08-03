@@ -33,7 +33,7 @@ public class Game {
         while (running) {
             System.out.println("\n---------------------------");
             System.out.println("~Menu~");
-            System.out.println("1. Show My Pokémon");
+            System.out.println("1. Show My Pokemon");
             System.out.println("2. Battle");
             System.out.println("3. Exit");
             System.out.println("4. Show Inventory");  //added for inventory
@@ -92,7 +92,7 @@ public class Game {
         this.boosterItemUsedInBattle = false;
 
         System.out.println("\n---------------------------");
-        System.out.println("Two wild Pokémon appeared!");
+        System.out.println("Two wild Pokemon appeared!");
         System.out.println("---------------------------");
         for (Pokemon p : wilds) {
             System.out.println(p + "\n");
@@ -124,7 +124,7 @@ public class Game {
         
      // After both battle rounds (or skip) are done
         if (player.getTeam().stream().allMatch(Pokemon::isDefeated)) {
-            System.out.println("\nAll your Pokémon have been defeated.");
+            System.out.println("\nAll your Pokemon have been defeated.");
             running = false;
             endGame();
         }
@@ -305,7 +305,7 @@ public class Game {
             int catchRate = 0;
             switch(type) {
                 case 1:     
-                    System.out.println("\nYou used a Poké Ball!");
+                    System.out.println("\nYou used a Poke Ball!");
                     catchRate = 10;
                     break;
                 case 2:     
@@ -321,7 +321,7 @@ public class Game {
                     catchRate = 51; 
                     break;
                 default:
-                    System.out.println("Invalid choice. You used a random Poké Ball!");
+                    System.out.println("Invalid choice. You used a random Poke Ball!");
                     catchRate = random.nextInt(25);
                     break;
             }
@@ -375,8 +375,8 @@ public class Game {
         System.out.println("🕹️ GAME INSTRUCTIONS:");
         System.out.println("• You will encounter 2 wild Pokémon in every battle.");
         System.out.println("• Your first Pokémon will fight the first wild one.");
-        System.out.println("• If you have a second Pokémon, it will fight the second wild one.");
-        System.out.println("• If not, a helper Pokémon will assist you.");
+        System.out.println("• If you have a second Pokemon, it will fight the second wild one.");
+        System.out.println("• If not, a helper Pokemon will assist you.");
         System.out.println();
         System.out.println("⚔️ DURING BATTLE:");
         System.out.println("1. Choose to attack the wild Pokémon.");
@@ -390,8 +390,8 @@ public class Game {
         System.out.println("• Items can only be used once per turn and must be in your inventory.");
         System.out.println();
         System.out.println("🎯 CATCHING POKÉMON:");
-        System.out.println("• After winning a battle, you may try to catch the wild Pokémon using Poké Balls.");
-        System.out.println("• Different Poké Balls have different success rates so choose carefully.");
+        System.out.println("• After winning a battle, you may try to catch the wild Pokemon using Poké Balls.");
+        System.out.println("• Different Poke Balls have different success rates so choose carefully.");
         System.out.println("===============================================\n");
         
         System.out.print("\nPress SPACE then ENTER to continue...");
