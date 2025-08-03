@@ -6,7 +6,7 @@ public class Boots extends Item {
 
     @Override
     public String getDescription() {
-        return "Boosts your Pokémon's speed for one turn.";
+        return "Boosts your Pokemon's speed for one turn.";
     }
 
     @Override
@@ -18,3 +18,4 @@ public class Boots extends Item {
         }
     }
 }
+
