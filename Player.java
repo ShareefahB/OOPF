@@ -64,9 +64,9 @@ public class Player {
 
     public void showTeam() {
         if (team.isEmpty()) {
-            System.out.println("You don't have any Pokémon yet.");
+            System.out.println("You don't have any Pokemon yet.");
         } else {
-            System.out.println("Your Pokémon:");
+            System.out.println("Your Pokemon:");
             for (int i = 0; i < team.size(); i++) {
                 System.out.println("[" + i + "]\n" + team.get(i).toString() + "\n");
             }
@@ -82,3 +82,4 @@ public class Player {
         return "Player Name: " + name + "\nScore: " + score + "\nTeam Size: " + team.size();
     }
 }
+
