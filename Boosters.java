@@ -12,7 +12,7 @@ public class Boosters {
 
 	    public static int getSpeedBoost(String boosterName) {
 	        if (Boots.equals(boosterName)) {
-	            return 5; // Example: Increase speed by 5 (you might need to add a speed attribute to Pokemon)
+	            return 10; // Example: Increase speed by 5 (you might need to add a speed attribute to Pokemon)
 	        }
 	        return 0;
 	    }
