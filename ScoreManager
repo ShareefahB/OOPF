@@ -3,67 +3,44 @@ import java.io.*;
 import java.util.*;
 
 public class ScoreManager {
-    private static final String SCORES_FILE = "scores.txt";
-    private List<PlayerScore> scores;
+    private static final String FILE_NAME = "topscores.txt";
 
-    public ScoreManager() {
-        scores = new ArrayList<>();
-        loadScores();
-    }
-
-    public void addScore(String playerName, int score) {
-        scores.add(new PlayerScore(playerName, score));
-        Collections.sort(scores);
-        if (scores.size() > 5) {
-            scores = scores.subList(0, 5);
+    // Save player's score to the file
+    public static void saveScore(String playerName, int score) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            writer.write(playerName + "," + score);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error saving score.");
         }
-        saveScores();
     }
 
-    public List<PlayerScore> getTopScores() {
-        return new ArrayList<>(scores);
-    }
+    // Get top 5 scores
+    public static List<String> getTopScores() {
+        List<String> lines = new ArrayList<>();
 
-    private void loadScores() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    scores.add(new PlayerScore(parts[0], Integer.parseInt(parts[1])));
-                }
-            }
-            Collections.sort(scores);
-        } catch (IOException e) {
-            // File doesn't exist yet, that's okay
-        }
-    }
-
-    private void saveScores() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(SCORES_FILE))) {
-            for (PlayerScore score : scores) {
-                writer.println(score.getName() + "," + score.getScore());
+                if (line.trim().isEmpty() || !line.contains(",")) continue;
+                lines.add(line.trim());
             }
         } catch (IOException e) {
-            System.err.println("Error saving scores: " + e.getMessage());
-        }
-    }
-
-    public static class PlayerScore implements Comparable<PlayerScore> {
-        private String name;
-        private int score;
-
-        public PlayerScore(String name, int score) {
-            this.name = name;
-            this.score = score;
+            return List.of("No scores found.");
         }
 
-        public String getName() { return name; }
-        public int getScore() { return score; }
+        lines.sort((a, b) -> {
+            int scoreA = Integer.parseInt(a.split(",")[1].trim());
+            int scoreB = Integer.parseInt(b.split(",")[1].trim());
+            return Integer.compare(scoreB, scoreA);
+        });
 
-        @Override
-        public int compareTo(PlayerScore other) {
-            return Integer.compare(other.score, this.score); // Descending order
+        List<String> top5 = new ArrayList<>();
+        for (int i = 0; i < Math.min(5, lines.size()); i++) {
+            String[] parts = lines.get(i).split(",");
+            top5.add((i + 1) + ". " + parts[0] + " - " + parts[1]);
         }
+
+        return top5;
     }
 }
