@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Game { //attributes
@@ -9,14 +8,12 @@ public class Game { //attributes
     private boolean boosterItemUsedInBattle;
     private boolean running;
     private boolean gameEnded = false;
-    private ScoreManager scoreManager;
 
     public Game() { //constructors
         this.scanner = new Scanner(System.in); //initiate the scanner
         this.random = new Random(); //random number generator
         this.usedBoosterItems = new ArrayList<>();
         this.boosterItemUsedInBattle = false;
-        this.scoreManager = new ScoreManager();
     }
 
     public void start() {
@@ -39,6 +36,7 @@ public class Game { //attributes
             System.out.println("2. Battle");
             System.out.println("3. Exit"); 
             System.out.println("4. Show Inventory");  
+            System.out.println("5. View Top Scores");
             System.out.print("Choose: ");
 
             int choice = getValidatedNumberInput(); //check if input is valid
@@ -59,28 +57,26 @@ public class Game { //attributes
                     System.out.println();
                     player.getInventory().showInventory();
                     break;
+                case 5:
+                    showTopScores(); // 👈 call the method
+                    break;
                 default:
                     System.out.println("\n---------------------------");
                     System.out.println("Invalid choice.");
                     System.out.println("---------------------------");
-                    // In the main menu switch statement:
-                case 5:
-                    System.out.println("\n--- TOP 5 SCORES ---");
-                    List<PlayerScore> topScores = scoreManager.getTopScores();
-                    if (topScores.isEmpty()) {
-                        System.out.println("No scores recorded yet.");
-                    } else {
-                        for (int i = 0; i < topScores.size(); i++) {
-                            PlayerScore score = topScores.get(i);
-                            System.out.printf("%d. %s - %d\n", i+1, score.getName(), score.getScore());
-                        }
-    }
-                    break;
             }
         }
     }
 
-    private void chooseStarter() {
+    private void showTopScores() {
+        System.out.println("\n--- Top 5 Scores ---");
+        List<String> scores = ScoreManager.getTopScores();
+        for (String s : scores) {
+            System.out.println(s);
+        }
+	}
+
+	private void chooseStarter() {
         List<Pokemon> starters = generateRandomPokemons(3);
         System.out.println("\n---------------------------");
         System.out.println("Choose your starter Pokémon:");
@@ -355,7 +351,6 @@ public class Game { //attributes
                     System.out.println("Invalid choice. You used a random Poke Ball!");
                     catchRate = random.nextInt(25);
                     break;
-                    // In the main menu switch statement:
             }
                 
         	int chance = random.nextInt(50);
@@ -435,41 +430,28 @@ public class Game { //attributes
         chooseStarter();
     }
 
-    
     private void endGame() {
-        if (gameEnded) return;
-        gameEnded = true;
         System.out.println("\n---------------------------");
         System.out.printf("Final score: %d\n", player.getScore());
-    
-    // Add the player's score to the leaderboard
-        scoreManager.addScore(player.getName(), player.getScore());
-    
-    // Show top scores
-        System.out.println("\n--- TOP 5 SCORES ---");
-        List<ScoreManager.PlayerScore> topScores = scoreManager.getTopScores();
-        if (topScores.isEmpty()) {
-            System.out.println("No scores recorded yet.");
-        } else {
-            for (int i = 0; i < topScores.size(); i++) {
-                ScoreManager.PlayerScore score = topScores.get(i);
-                System.out.printf("%d. %s - %d\n", i+1, score.getName(), score.getScore());
-            }
-        }
-        System.out.println("---------------------------");
+
+        ScoreManager.saveScore(player.getName(), player.getScore()); // 👈 Save score
+
         System.out.println("Thanks for playing!");
         System.out.println("---------------------------");
         
         System.out.print("Would you like to return to the main menu? (y/n): ");
         String choice = scanner.nextLine();
+        
         if (choice.equalsIgnoreCase("y")) {
-            this.running = true;
-            this.gameEnded = false;
-        } else {
-            this.running = false;
-            System.exit(0);
+            this.running = true; // return to the main menu
+        }
+        else {
+            this.running = false; // Exit the main menu
+            System.exit(0); //  terminate the program
         }
     }
+    
+    
     private List<String> getUsableItemsFromInventory() {
         List<String> uniqueItems = new ArrayList<>();
         for (String item : player.getInventory().getItems()) {
