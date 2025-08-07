@@ -49,7 +49,7 @@ public class ScoreManager {
         }
     }
 
-    private static class PlayerScore implements Comparable<PlayerScore> {
+    public static class PlayerScore implements Comparable<PlayerScore> {
         private String name;
         private int score;
 
