@@ -1,0 +1,69 @@
+
+import java.io.*;
+import java.util.*;
+
+public class ScoreManager {
+    private static final String SCORES_FILE = "scores.txt";
+    private List<PlayerScore> scores;
+
+    public ScoreManager() {
+        scores = new ArrayList<>();
+        loadScores();
+    }
+
+    public void addScore(String playerName, int score) {
+        scores.add(new PlayerScore(playerName, score));
+        Collections.sort(scores);
+        if (scores.size() > 5) {
+            scores = scores.subList(0, 5);
+        }
+        saveScores();
+    }
+
+    public List<PlayerScore> getTopScores() {
+        return new ArrayList<>(scores);
+    }
+
+    private void loadScores() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(SCORES_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    scores.add(new PlayerScore(parts[0], Integer.parseInt(parts[1])));
+                }
+            }
+            Collections.sort(scores);
+        } catch (IOException e) {
+            // File doesn't exist yet, that's okay
+        }
+    }
+
+    private void saveScores() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(SCORES_FILE))) {
+            for (PlayerScore score : scores) {
+                writer.println(score.getName() + "," + score.getScore());
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving scores: " + e.getMessage());
+        }
+    }
+
+    private static class PlayerScore implements Comparable<PlayerScore> {
+        private String name;
+        private int score;
+
+        public PlayerScore(String name, int score) {
+            this.name = name;
+            this.score = score;
+        }
+
+        public String getName() { return name; }
+        public int getScore() { return score; }
+
+        @Override
+        public int compareTo(PlayerScore other) {
+            return Integer.compare(other.score, this.score); // Descending order
+        }
+    }
+}
