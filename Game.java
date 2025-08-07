@@ -16,6 +16,7 @@ public class Game { //attributes
         this.random = new Random(); //random number generator
         this.usedBoosterItems = new ArrayList<>();
         this.boosterItemUsedInBattle = false;
+        this.scoreManager = new ScoreManager();
     }
 
     public void start() {
@@ -62,6 +63,19 @@ public class Game { //attributes
                     System.out.println("\n---------------------------");
                     System.out.println("Invalid choice.");
                     System.out.println("---------------------------");
+                    // In the main menu switch statement:
+                case 5:
+                    System.out.println("\n--- TOP 5 SCORES ---");
+                    List<PlayerScore> topScores = scoreManager.getTopScores();
+                    if (topScores.isEmpty()) {
+                        System.out.println("No scores recorded yet.");
+                    } else {
+                        for (int i = 0; i < topScores.size(); i++) {
+                            PlayerScore score = topScores.get(i);
+                            System.out.printf("%d. %s - %d\n", i+1, score.getName(), score.getScore());
+                        }
+    }
+                    break;
             }
         }
     }
@@ -342,18 +356,6 @@ public class Game { //attributes
                     catchRate = random.nextInt(25);
                     break;
                     // In the main menu switch statement:
-                case 5:
-                    System.out.println("\n--- TOP 5 SCORES ---");
-                    List<PlayerScore> topScores = scoreManager.getTopScores();
-                    if (topScores.isEmpty()) {
-                        System.out.println("No scores recorded yet.");
-                    } else {
-                        for (int i = 0; i < topScores.size(); i++) {
-                            PlayerScore score = topScores.get(i);
-                            System.out.printf("%d. %s - %d\n", i+1, score.getName(), score.getScore());
-                        }
-                    }
-                    break;
             }
                 
         	int chance = random.nextInt(50);
