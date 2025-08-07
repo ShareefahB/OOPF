@@ -58,7 +58,7 @@ public class Game { //attributes
                     player.getInventory().showInventory();
                     break;
                 case 5:
-                    showTopScores(); // 👈 call the method
+                    showTopScores(); //  call the method
                     break;
                 default:
                     System.out.println("\n---------------------------");
@@ -395,30 +395,30 @@ public class Game { //attributes
     
     private void printInstructions() {
         System.out.println("===============================================");
-        System.out.printf("   TRAINER %s, WELCOME TO THE WORLD OF POKÉMON!\n", player.getName());
+        System.out.printf("   TRAINER %s, WELCOME TO THE WORLD OF POKEMON!\n", player.getName());
         System.out.println("===============================================");
-        System.out.println("Your journey begins now. Prepare to battle wild Pokémon and build your team!");
+        System.out.println("Your journey begins now. Prepare to battle wild Pokemon and build your team!");
         System.out.println();
-        System.out.println("🕹️ GAME INSTRUCTIONS:");
-        System.out.println("• You will encounter 2 wild Pokémon in every battle.");
-        System.out.println("• Your first Pokémon will fight the first wild one.");
-        System.out.println("• If you have a second Pokemon, it will fight the second wild one.");
-        System.out.println("• If not, a helper Pokemon will assist you.");
+        System.out.println("GAME INSTRUCTIONS:");
+        System.out.println("You will encounter 2 wild Pokemon in every battle.");
+        System.out.println("Your first Pokémon will fight the first wild one.");
+        System.out.println("If you have a second Pokemon, it will fight the second wild one.");
+        System.out.println("If not, a helper Pokemon will assist you.");
         System.out.println();
-        System.out.println("⚔️ DURING BATTLE:");
-        System.out.println("1. Choose to attack the wild Pokémon.");
+        System.out.println("DURING BATTLE:");
+        System.out.println("1. Choose to attack the wild Pokemon.");
         System.out.println("2. If you have booster items, you can choose to:");
         System.out.println("   - Use 'Boxing Gloves' to boost attack.");
         System.out.println("   - Use 'Boots' to boost speed.");
         System.out.println("3. Speed determines who attacks first.");
         System.out.println();
-        System.out.println("🎁 ITEMS:");
-        System.out.println("• Use items during your turn by entering their name exactly.");
-        System.out.println("• Items can only be used once per turn and must be in your inventory.");
+        System.out.println("ITEMS:");
+        System.out.println("Use items during your turn by entering their name exactly.");
+        System.out.println("Items can only be used once per turn and must be in your inventory.");
         System.out.println();
-        System.out.println("🎯 CATCHING POKÉMON:");
-        System.out.println("• After winning a battle, you may try to catch the wild Pokemon using Poké Balls.");
-        System.out.println("• Different Poke Balls have different success rates so choose carefully.");
+        System.out.println("CATCHING POKEMON:");
+        System.out.println("After winning a battle, you may try to catch the wild Pokemon using Poke Balls.");
+        System.out.println("Different Poke Balls have different success rates so choose carefully.");
         System.out.println("===============================================\n");
         
         System.out.print("\nPress SPACE then ENTER to continue...");
@@ -434,7 +434,7 @@ public class Game { //attributes
         System.out.println("\n---------------------------");
         System.out.printf("Final score: %d\n", player.getScore());
 
-        ScoreManager.saveScore(player.getName(), player.getScore()); // 👈 Save score
+        ScoreManager.saveScore(player.getName(), player.getScore()); // Save score
 
         System.out.println("Thanks for playing!");
         System.out.println("---------------------------");
