@@ -1,14 +1,13 @@
-package oopAssignment;
 
 import java.io.*;
 import java.util.*;
 
 public class ScoreManager {
-    private static final String FILE_NAME = "topscores.txt";
+    private static final String fileName = "topscores.txt";
 
     // Save player's score to the file
     public static void saveScore(String playerName, int score) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(playerName + "," + score);
             writer.newLine();
         } catch (IOException e) {
@@ -20,7 +19,7 @@ public class ScoreManager {
     public static List<String> getTopScores() {
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty() || !line.contains(",")) continue;
